@@ -25,12 +25,12 @@ Before running the script, ensure `the python-notebook.slurm` file is configured
 ### Running the Script
 
 1. Make the script executable (if not already done):
-   ```bash
-   chmod +x submit_and_monitor.sh
-Run the script by simply executing it from the command line:
-
 ```bash
-  ./submit_and_monitor.sh
+chmod +x submit_and_monitor.sh
+
+2. Run the script by simply executing it from the command line:
+```bash
+./submit_and_monitor.sh
 ```
 
 ### Interruption Handling
