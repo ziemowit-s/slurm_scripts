@@ -1,4 +1,4 @@
-# Slurm Job Submission and Monitoring Script
+# Slurm: Submission and Monitoring
 
 ## Introduction
 
