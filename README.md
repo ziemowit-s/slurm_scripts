@@ -29,7 +29,8 @@ cat jupyter-log-JOB_ID.txt
 ## Usage
 
 ### Configuration
-Before running the script, ensure `the python-notebook.slurm` file is configured with the desired SBATCH directives and job settings.
+Before running the script, ensure `the python-notebook.slurm` file is configured with the desired SBATCH directives and job settings. By default it is set to 1 GPU (A100 for default Athena usage).
+Time is parametrized with `run_jupyter.sh` script (see below).
 
 ### Running the Script
 
