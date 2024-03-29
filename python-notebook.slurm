@@ -8,7 +8,8 @@
 #SBATCH --account=plgneuroanatomistllm-gpu-a100  # Specify your account
 
 # Load the CUDA/11.7.0 module, recommended for A100 GPU
-module load CUDA/11.7.0
+module load CUDA/12.1.1
+##module load PyTorch/1.12.1-CUDA-11.3.1
 
 source $PLG_GROUPS_STORAGE/plggcompneuro/nn39/bin/activate
 
@@ -31,14 +32,15 @@ echo -e "
     ------------------------------------------------------------------
     "
 
-##module load jupyterlab/3.1.6-gcccore-11.2.0 scipy-bundle/2021.10-intel-2021b
-
 # Change to the JUPYTER_INIT_PATH if specified, otherwise default to the home directory
 if [ -n "$JUPYTER_INIT_PATH" ]; then
     cd "$JUPYTER_INIT_PATH"
 else
     cd $HOME
 fi
+
+# check CUDA if available
+python $PLG_GROUPS_STORAGE/plggcompneuro/slurm_scripts/check_cuda.py
 
 ## start an ipcluster instance and launch jupyter server
 jupyter-notebook --no-browser --port=$ipnport --ip=$ipnip
