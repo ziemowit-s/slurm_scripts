@@ -25,6 +25,16 @@ jupyter notebook password
 ```bash
 cat jupyter-log-JOB_ID.txt
 ```
+- You might want to install [Unsloth](https://github.com/unslothai/unsloth) library
+You can check CUDA availability running:
+```bash
+sbatch python-install-unsloth.slurm
+```
+It will install Unsloth for CUDA 12.1 with Ampere (if you want to change that edit `python-install-unsloth.slurm`) and output log to `install-unsloth-log.txt` file.
+You need to manually remove the `install-unsloth-log.txt` file. By default the script will run for 30 minuts, but if you want to kill it earlier just run:
+```bash
+scancel JOB-ID
+```
 
 ## Usage
 
