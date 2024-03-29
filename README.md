@@ -32,6 +32,17 @@ cat jupyter-log-JOB_ID.txt
 Before running the script, ensure `the python-notebook.slurm` file is configured with the desired SBATCH directives and job settings. By default it is set to 1 GPU (A100 for default Athena usage).
 Time is parametrized with `run_jupyter.sh` script (see below).
 
+### Check CUDA
+You can check CUDA availability running:
+```bash
+sbatch check-cuda.slurm
+```
+It will check PyTorch (in your source Path in slurm file, so adjust if needed) and CUDA loaded as module and output log to `check-cuda-log.txt` file.
+You need to manually remove the `check-cuda-log.txt` file. By default the script will run for 30 minuts, but if you want to kill it earlier just run:
+```bash
+scancel JOB_ID
+```
+
 ### Running the Script
 
 1. Make the script executable (if not already done):
