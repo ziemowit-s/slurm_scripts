@@ -38,12 +38,7 @@ Before running the script, ensure `the python-notebook.slurm` file is configured
 chmod +x run_jupyter.sh
 ```
 
-2. Run the script with Jupyter starting directory at your `$HOME`:
-```bash
-./run_jupyter.sh
-```
-
-3. Run the script with Jupyter starting directory at `/path/to/your/dir`:
+2. Run the script with Jupyter starting directory at `/path/to/your/dir`:
 ```bash
 ./run_jupyter.sh /path/to/your/dir
 ```
