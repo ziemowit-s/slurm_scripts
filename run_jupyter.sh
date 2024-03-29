@@ -23,7 +23,7 @@ cancel_job() {
 }
 
 # Submit the batch job, passing the starting directory and job duration as variables
-output=$(sbatch --export=ALL,JUPYTER_INIT_PATH="$starting_dir" --time="$job_duration" python-notebook.slurm)
+output=$(sbatch --export=ALL,WORKING_DIR="$starting_dir" --time="$job_duration" python-notebook.slurm)
 
 # Extract the job ID from the output
 job_id=$(echo $output | grep -oP '\d+')
