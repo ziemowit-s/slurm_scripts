@@ -16,7 +16,7 @@ It's particularly tailored to run Jupyter notebooks with supercomputer [Athena](
 
 - Access to a computing cluster with `sbatch` command available.
 - Permissions to submit and cancel jobs in the cluster.
-- change the Python source path in the `run_jupyter.sh` script, which will load environment which contains jupyter 
+- change the Python source path in the `python-notebook.slurm` script, which will load environment which contains Jupyter 
 
 ## Usage
 
