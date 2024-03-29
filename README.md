@@ -3,7 +3,7 @@
 ## Introduction
 
 This Bash script is designed to automate the submission and monitoring of batch jobs in a high-performance computing (HPC) environment. 
-It's particularly tailored to run Jupyter notebooks but can be adapted for other types of jobs.
+It's particularly tailored to run Jupyter notebooks with supercomputer [Athena](https://guide.plgrid.pl/resources/athena) in Academic Computer Centre Cyfronet AGH but can be adapted for other types of jobs.
 
 ## Features
 
@@ -16,6 +16,7 @@ It's particularly tailored to run Jupyter notebooks but can be adapted for other
 
 - Access to a computing cluster with `sbatch` command available.
 - Permissions to submit and cancel jobs in the cluster.
+- change the Python source path in the `run_jupyter.sh` script, which will load environment which contains jupyter 
 
 ## Usage
 
@@ -26,12 +27,12 @@ Before running the script, ensure `the python-notebook.slurm` file is configured
 
 1. Make the script executable (if not already done):
 ```bash
-chmod +x submit_and_monitor.sh
+chmod +x run_jupyter.sh
 ```
 
 2. Run the script by simply executing it from the command line:
 ```bash
-./submit_and_monitor.sh
+./run_jupyter.sh
 ```
 
 ### Interruption Handling
@@ -41,3 +42,11 @@ If the script detects an interruption, it will automatically execute scancel wit
 ### Output
 The script will create a log file named `jupyter-log-<JOB_ID>.txt` capturing the output of the job. 
 This file will be automatically displayed once it's available and deleted after the job completes or is canceled.
+The content of the log file shows a SSH tunel command you should run on your local machine (especially check port because it might differ from the default Jupyter port), the ssh tunneling will looks like this:
+
+```bash
+ssh -o ServerAliveInterval=300 -N -L PORT:IP_ADDRESS:PORT USERNAME@athena.cyfronet.pl
+```
+
+after establising the tunel you will be able to access Jupyter from your local browser `localhost:PORT`. 
+If you need the token, it will be displayed with all Jupyter run log, after sbatch submit the job.
