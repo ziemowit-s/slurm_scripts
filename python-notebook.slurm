@@ -15,7 +15,7 @@ module load CUDA/12.1.1
 export WORKING_DIR=$PLG_GROUPS_STORAGE/plggcompneuro
 
 # Set Hugging Face Transformers cache directory
-export TRANSFORMERS_CACHE=$WORKING_DIR/.cache/huggingface
+export HF_HOME=$WORKING_DIR/.cache/huggingface
 
 # Set pip cache directory
 export PIP_CACHE_DIR=$WORKING_DIR/.cache/pip
