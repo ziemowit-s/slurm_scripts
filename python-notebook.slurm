@@ -2,7 +2,6 @@
 #SBATCH --partition=plgrid-gpu-a100
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=6
-#SBATCH --time=1-00:00:00
 #SBATCH --job-name=jupyter-notebook-tunnel
 #SBATCH --output=jupyter-log-%J.txt
 #SBATCH --gres=gpu:1  # Adjust the number of GPUs requested based on your needs and limits
