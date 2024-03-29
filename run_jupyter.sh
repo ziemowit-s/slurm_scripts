@@ -1,13 +1,16 @@
 #!/bin/bash
 
-# Check if a path argument is provided
-if [ "$#" -ne 1 ]; then
-  echo "Usage: $0 <path-to-jupyter-init_path>"
+# Check if the correct number of arguments is provided
+if [ "$#" -ne 2 ]; then
+  echo "Usage: $0 <path-to-jupyter-starting-dir> <job-duration>"
   exit 1
 fi
 
-# The path to the Jupyter init directory from the script argument
+# The path to the Jupyter starting directory from the first script argument
 starting_dir=$1
+
+# The job duration in the format 'days-hours:minutes:seconds' from the second script argument
+job_duration=$2
 
 # Function to cancel the job and remove the log file
 cancel_job() {
@@ -19,8 +22,8 @@ cancel_job() {
   fi
 }
 
-# Submit the batch job and capture the output, passing the starting directory as a variable
-output=$(sbatch --export=ALL,JUPYTER_INIT_PATH="$starting_dir" python-notebook.slurm)
+# Submit the batch job, passing the starting directory and job duration as variables
+output=$(sbatch --export=ALL,STARTING_DIR="$starting_dir" --time="$job_duration" python-notebook.slurm)
 
 # Extract the job ID from the output
 job_id=$(echo $output | grep -oP '\d+')
@@ -33,24 +36,16 @@ log_file_name="jupyter-log-$job_id.txt"
 # Set up trap to call cancel_job when the script is interrupted
 trap cancel_job INT TERM
 
-echo "Waiting for log file to be created..."
-# Wait for the log file to be created, checking periodically
-while [ ! -f "$log_file_name" ] do
+# Wait indefinitely for the log file to be created, checking periodically
+while [ ! -f "$log_file_name" ]; do
   echo "Waiting for log file to be created..."
   sleep 10  # Wait for 10 seconds before checking again
 done
 
-
-# Check if the log file was created
-if [ ! -f "$log_file_name" ]; then
-  echo "Error: Log file ($log_file_name) was not created."
-  exit 1
-else
-  echo "Log file ($log_file_name) was created."
-  echo "Contents of the log file:"
-  cat $log_file_name
-  echo "---------------------------------"
-fi
+echo "Log file ($log_file_name) was created."
+echo "Contents of the log file:"
+cat $log_file_name
+echo "---------------------------------"
 
 # After the log file is found, monitor the job status
 echo "Monitoring the job status. Press Ctrl+C to cancel the job and exit."
