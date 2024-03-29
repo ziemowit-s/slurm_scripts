@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Initialize the number of attempts to wait for the log file to be created
+max_attempts=50
+
 # Function to cancel the job and remove the log file
 cancel_job() {
   echo "Cancelling job $job_id"
@@ -24,8 +27,6 @@ log_file_name="jupyter-log-$job_id.txt"
 # Set up trap to call cancel_job when the script is interrupted
 trap cancel_job INT TERM
 
-# Initialize the number of attempts to wait for the log file to be created
-max_attempts=10
 attempt=0
 
 # Wait for the log file to be created, checking periodically
