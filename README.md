@@ -38,9 +38,9 @@ Before running the script, ensure `the python-notebook.slurm` file is configured
 chmod +x run_jupyter.sh
 ```
 
-2. Run the script with Jupyter starting directory at `/path/to/your/dir`:
+2. Run the script with 2 parameters: Jupyter starting directory at `/path/to/your/dir` and time of your script to run in format `days-hours:minutes:seconds` (e.g., `1-00:00:00` for one day) :
 ```bash
-./run_jupyter.sh /path/to/your/dir
+./run_jupyter.sh /path/to/your/dir 1-00:00:00
 ```
 
 
