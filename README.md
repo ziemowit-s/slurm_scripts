@@ -16,7 +16,15 @@ It's particularly tailored to run Jupyter notebooks with supercomputer [Athena](
 
 - Access to a computing cluster with `sbatch` command available.
 - Permissions to submit and cancel jobs in the cluster.
-- change the Python source path in the `python-notebook.slurm` script, which will load environment which contains Jupyter 
+- Change the Python source path in the `python-notebook.slurm` script suited to your location, which will load environment containing Jupyter
+- Preferably provide Jupyter password to log in without the need of token
+```bash
+jupyter notebook password
+```
+- If you do want to use tokens instead look into the log file created for your job to see Jupyter's outputs containing the token
+```bash
+cat jupyter-log-JOB_ID.txt
+```
 
 ## Usage
 
