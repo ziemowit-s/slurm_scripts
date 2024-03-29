@@ -7,6 +7,9 @@
 #SBATCH --gres=gpu:1  # Adjust the number of GPUs requested based on your needs and limits
 #SBATCH --account=plgneuroanatomistllm-gpu-a100  # Specify your account
 
+# Load the CUDA/11.7.0 module, recommended for A100 GPU
+module load CUDA/11.7.0
+
 source $PLG_GROUPS_STORAGE/plggcompneuro/nn39/bin/activate
 
 ## get tunneling info
