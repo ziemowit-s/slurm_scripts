@@ -10,9 +10,16 @@
 # Load the CUDA/11.7.0 module, recommended for A100 GPU
 module load CUDA/12.1.1
 ##module load PyTorch/1.12.1-CUDA-11.3.1
+module load GCC/12.3.0 
+
+python_env_name="nn39"
 
 # Define working directory
 export WORKING_DIR=$PLG_GROUPS_STORAGE/plggcompneuro
+
+# Configure GCC to find the custom include and library paths
+export CPATH="${WORKING_DIR}/${python_env_name}/include:${CPATH}"
+export LIBRARY_PATH="${WORKING_DIR}/${python_env_name}/lib:${LIBRARY_PATH}"
 
 # Set Hugging Face Transformers cache directory
 export HF_HOME=$WORKING_DIR/.cache/huggingface
@@ -23,7 +30,7 @@ export PIP_CACHE_DIR=$WORKING_DIR/.cache/pip
 # Use WORKING_DIR for other necessary operations, e.g., setting the initial path for the Jupyter Notebook
 export JUPYTER_INIT_PATH=$WORKING_DIR
 
-source $WORKING_DIR/nn39/bin/activate
+source $WORKING_DIR/$python_env_name/bin/activate
 
 ## get tunneling info
 XDG_RUNTIME_DIR=""
