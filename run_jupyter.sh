@@ -36,9 +36,10 @@ log_file_name="jupyter-log-$job_id.txt"
 # Set up trap to call cancel_job when the script is interrupted
 trap cancel_job INT TERM
 
+echo "Waiting for log file to be created..."
+
 # Wait indefinitely for the log file to be created, checking periodically
 while [ ! -f "$log_file_name" ]; do
-  echo "Waiting for log file to be created..."
   sleep 10  # Wait for 10 seconds before checking again
 done
 
