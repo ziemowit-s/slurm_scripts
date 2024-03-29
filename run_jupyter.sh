@@ -9,9 +9,6 @@ fi
 # The path to the Jupyter init directory from the script argument
 starting_dir=$1
 
-# Initialize the number of attempts to wait for the log file to be created
-max_attempts=50
-
 # Function to cancel the job and remove the log file
 cancel_job() {
   echo "Cancelling job $job_id"
@@ -36,18 +33,17 @@ log_file_name="jupyter-log-$job_id.txt"
 # Set up trap to call cancel_job when the script is interrupted
 trap cancel_job INT TERM
 
-attempt=0
-
+echo "Waiting for log file to be created..."
 # Wait for the log file to be created, checking periodically
-while [ ! -f "$log_file_name" ] && [ $attempt -lt $max_attempts ]; do
-  echo "Waiting for log file to be created... (Attempt: $((attempt+1))/$max_attempts)"
+while [ ! -f "$log_file_name" ] do
+  echo "Waiting for log file to be created..."
   sleep 10  # Wait for 10 seconds before checking again
-  ((attempt++))
 done
 
-# Check if the log file was created within the given number of attempts
+
+# Check if the log file was created
 if [ ! -f "$log_file_name" ]; then
-  echo "Error: Log file ($log_file_name) was not created after $max_attempts attempts."
+  echo "Error: Log file ($log_file_name) was not created."
   exit 1
 else
   echo "Log file ($log_file_name) was created."
