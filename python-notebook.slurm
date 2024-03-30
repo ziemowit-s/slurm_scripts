@@ -11,15 +11,10 @@
 module load CUDA/12.1.1
 ##module load PyTorch/1.12.1-CUDA-11.3.1
 module load GCC/12.3.0 
-
-python_env_name="nn39"
+module load Python/3.10.8
 
 # Define working directory
 export WORKING_DIR=$PLG_GROUPS_STORAGE/plggcompneuro
-
-# Configure GCC to find the custom include and library paths
-export CPATH="${WORKING_DIR}/${python_env_name}/include:${CPATH}"
-export LIBRARY_PATH="${WORKING_DIR}/${python_env_name}/lib:${LIBRARY_PATH}"
 
 # Set Hugging Face Transformers cache directory
 export HF_HOME=$WORKING_DIR/.cache/huggingface
@@ -29,8 +24,6 @@ export PIP_CACHE_DIR=$WORKING_DIR/.cache/pip
 
 # Use WORKING_DIR for other necessary operations, e.g., setting the initial path for the Jupyter Notebook
 export JUPYTER_INIT_PATH=$WORKING_DIR
-
-source $WORKING_DIR/$python_env_name/bin/activate
 
 ## get tunneling info
 XDG_RUNTIME_DIR=""
@@ -50,6 +43,10 @@ echo -e "
     localhost:$ipnport  (prefix w/ https:// if using password)
     ------------------------------------------------------------------
     "
+
+cd $WORKING_DIR/llm
+pip install -r requirements.txt
+pip install "unsloth[cu121-ampere] @ git+https://github.com/unslothai/unsloth.git"
 
 # Change to the JUPYTER_INIT_PATH if specified, otherwise default to the home directory
 if [ -n "$JUPYTER_INIT_PATH" ]; then
