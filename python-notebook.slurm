@@ -2,28 +2,33 @@
 #SBATCH --partition=plgrid-gpu-a100
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=6
+#SBATCH --time=1-00:00:00
 #SBATCH --job-name=jupyter-notebook-tunnel
 #SBATCH --output=jupyter-log-%J.txt
 #SBATCH --gres=gpu:1  # Adjust the number of GPUs requested based on your needs and limits
 #SBATCH --account=plgneuroanatomistllm-gpu-a100  # Specify your account
 
-# Load the CUDA/11.7.0 module, recommended for A100 GPU
-module load CUDA/12.1.1
-##module load PyTorch/1.12.1-CUDA-11.3.1
-module load GCC/12.3.0 
-module load Python/3.10.8
+cd $PLG_GROUPS_STORAGE/plggcompneuro
 
-# Define working directory
-export WORKING_DIR=$PLG_GROUPS_STORAGE/plggcompneuro
-
-# Set Hugging Face Transformers cache directory
-export HF_HOME=$WORKING_DIR/.cache/huggingface
-
-# Set pip cache directory
-export PIP_CACHE_DIR=$WORKING_DIR/.cache/pip
-
-# Use WORKING_DIR for other necessary operations, e.g., setting the initial path for the Jupyter Notebook
+# Set the working directory
+export WORKING_DIR=$(pwd)
+export HOME=$WORKING_DIR
+export PATH=$PATH:$HOME:$HOME/.local/bin
+export PIP_CACHE_DIR=$HOME/.cache/pip
 export JUPYTER_INIT_PATH=$WORKING_DIR
+export TOKENIZERS_PARALLELISM=false
+
+
+# Load necessary modules
+module load GCC/12.3.0
+module load CUDA/12.1.1
+module load Python/3.10.4
+module load Python-bundle-PyPI/2023.06
+module load IPython/8.14.0
+
+# Define the directory name
+DIR="nngcc"
+source $DIR/bin/activate
 
 ## get tunneling info
 XDG_RUNTIME_DIR=""
@@ -44,23 +49,10 @@ echo -e "
     ------------------------------------------------------------------
     "
 
-cd $WORKING_DIR/llm
-pip install -r requirements.txt
-pip install "unsloth[cu121-ampere] @ git+https://github.com/unslothai/unsloth.git"
-
-# Change to the JUPYTER_INIT_PATH if specified, otherwise default to the home directory
-if [ -n "$JUPYTER_INIT_PATH" ]; then
-    cd "$JUPYTER_INIT_PATH"
-else
-    cd $HOME
-fi
-
 # Print the current working directory
 echo "Starting Jupyter Notebook in directory:"
 pwd
 
-# check CUDA if available
-python $PLG_GROUPS_STORAGE/plggcompneuro/slurm_scripts/check_cuda.py
-
 ## start an ipcluster instance and launch jupyter server
 jupyter-notebook --no-browser --port=$ipnport --ip=$ipnip
+
