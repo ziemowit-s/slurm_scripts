@@ -22,7 +22,7 @@ export TOKENIZERS_PARALLELISM=false
 # Load necessary modules
 module load GCC/12.3.0
 module load CUDA/12.1.1
-module load Python/3.10.4
+module load Python/3.11.3
 module load Python-bundle-PyPI/2023.06
 module load IPython/8.14.0
 
