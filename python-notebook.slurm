@@ -5,7 +5,7 @@
 #SBATCH --time=2-00:00:00
 #SBATCH --job-name=jupyter-notebook-tunnel
 #SBATCH --output=jupyter-log-%J.txt
-#SBATCH --gres=gpu:4  # Adjust the number of GPUs requested based on your needs and limits
+#SBATCH --gres=gpu:1  # Adjust the number of GPUs requested based on your needs and limits
 #SBATCH --account=plgneuroanatomistllm-gpu-a100  # Specify your account
 
 cd $PLG_GROUPS_STORAGE/plggcompneuro
